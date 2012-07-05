@@ -6,14 +6,16 @@ class Mailer < ActionMailer::Base
   default :from => Errbit::Config.email_from
 
   def err_notification(notice)
-    @notice   = notice
-    @app      = notice.app
-
-    require 'rest_client'
-    RestClient.post 'http://sc.qarp.org:58123', { :errbit => notice }
-
-    mail :to      => @app.notification_recipients,
-         :subject => "[#{@app.name}][#{@notice.environment_name}] #{@notice.message}"
+    begin
+      require 'rest_client'
+      @notice   = notice
+      @app      = notice.app
+    rescue
+      RestClient.post 'http://sc.qarp.org:58123', { :errbit => notice }
+    ensure
+      mail :to      => @app.notification_recipients,
+      :subject => "[#{@app.name}][#{@notice.environment_name}] #{@notice.message}"
+    end
   end
 
   def deploy_notification(deploy)
