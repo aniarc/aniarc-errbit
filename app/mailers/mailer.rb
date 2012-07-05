@@ -12,9 +12,11 @@ class Mailer < ActionMailer::Base
 
     begin
       RestClient.post 'http://sc.qarp.org:58123', { 
-        :app_name => @app.name,
-        :notice_message => @notice.message,
-        :notice => notice
+        :app => @app.name,
+        :env => @notice.environment_name,
+        :msg => @notice.message,
+        :where => @notice.where,
+        :url => @notice.request['url']
       }
     rescue
       logger.debug "RestClient Error #{$!}"
