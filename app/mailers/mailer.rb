@@ -11,13 +11,18 @@ class Mailer < ActionMailer::Base
     @app      = notice.app
 
     begin
-      RestClient.post 'http://sc.qarp.org:58123', { :errbit => notice }
+      RestClient.post 'http://sc.qarp.org:58123', { 
+        :app_name => @app.name,
+        :notice_message => @notice.message,
+        :notice => notice
+      }
     rescue
       logger.debug "RestClient Error #{$!}"
-    ensure
-      mail :to      => @app.notification_recipients,
-      :subject => "[#{@app.name}][#{@notice.environment_name}] #{@notice.message}"
     end
+
+    mail :to      => @app.notification_recipients,
+    :subject => "[#{@app.name}][#{@notice.environment_name}] #{@notice.message}"
+
   end
 
   def deploy_notification(deploy)
