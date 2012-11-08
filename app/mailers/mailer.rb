@@ -11,7 +11,7 @@ class Mailer < ActionMailer::Base
     @app      = notice.app
 
     begin
-      RestClient.post 'http://sc.qarp.org:58123', { 
+      RestClient.post Errbit::Config.post_to, {
         :app => @app.name,
         :env => @notice.environment_name,
         :msg => @notice.message,
