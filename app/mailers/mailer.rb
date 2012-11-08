@@ -14,16 +14,18 @@ class Mailer < ActionMailer::Base
       RestClient.post Errbit::Config.post_to, {
         :app => @app.name,
         :env => @notice.environment_name,
+        :hostname => @notice.server_environment['hostname'],
         :msg => @notice.message,
         :where => @notice.where,
-        :url => @notice.request['url']
+        :url => @notice.request['url'],
+        :errbit_url => app_err_url(@app, @notice.problem)
       }
     rescue
       logger.debug "RestClient Error #{$!}"
     end
 
     mail :to      => @app.notification_recipients,
-    :subject => "[#{@app.name}][#{@notice.environment_name}] #{@notice.message}"
+    :subject => "[#{@app.name}][#{@notice.server_environment['hostname']}] #{@notice.message}"
 
   end
 
