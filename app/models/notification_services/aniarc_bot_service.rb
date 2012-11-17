@@ -22,10 +22,8 @@ class NotificationServices::AniarcBotService < NotificationService
 
     RestClient.post api_token, {
         :app => problem.app.name,
-        :env => problem,#.environment_name,
-        :hostname => problem.server_environment['hostname'],
+        :problem => problem.inspect,
         :msg => notification_description(problem),
-        :where => problem.where,
         :errbit_url => "http://#{Errbit::Config.host}/apps/#{problem.app.id.to_s}"
     }
   end
