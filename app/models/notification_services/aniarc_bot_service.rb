@@ -21,10 +21,8 @@ class NotificationServices::AniarcBotService < NotificationService
     require 'rest_client'
 
     RestClient.post api_token, {
-        :app => problem.app.name,
-        :problem => problem.inspect,
-        :msg => notification_description(problem),
-        :errbit_url => "http://#{Errbit::Config.host}/apps/#{problem.app.id.to_s}"
+        :problem => problem.to_json,
+        :errbit_url => "http://#{Errbit::Config.host}/apps/#{problem.app.id.to_s}/problems/#{problem.id.to_s}"
     }
   end
 end
