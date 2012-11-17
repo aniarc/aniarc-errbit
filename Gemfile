@@ -36,6 +36,8 @@ gem 'pivotal-tracker'
 gem 'ruby-fogbugz', :require => 'fogbugz'
 # Github Issues
 gem 'octokit', '~> 1.0.0'
+# Gitlab
+gem 'gitlab'
 
 # Bitbucket Issues
 gem 'bitbucket_rest_api'
@@ -79,7 +81,6 @@ group :development, :test do
 #  gem 'rpm_contrib'
 #  gem 'newrelic_rpm'
   gem 'capistrano'
-  gem 'capistrano_colors'
 end
 
 group :test do
@@ -103,6 +104,7 @@ group :assets do
   gem 'execjs'
   gem 'therubyracer', :platform => :ruby  # C Ruby (MRI) or Rubinius, but NOT Windows
   gem 'uglifier',     '>= 1.0.3'
+  gem 'underscore-rails'
 end
 
 gem 'turbo-sprockets-rails3'

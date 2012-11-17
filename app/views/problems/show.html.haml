@@ -10,7 +10,7 @@
   %strong Environment:
   = @problem.environment
   %strong Last Notice:
-  = @problem.last_notice_at.to_s(:precise)
+  = @problem.last_notice_at.in_time_zone
 - content_for :action_bar do
   - if @problem.unresolved?
     %span= link_to 'resolve', [:resolve, @app, @problem], :method => :put, :data => { :confirm => problem_confirm }, :class => 'resolve'

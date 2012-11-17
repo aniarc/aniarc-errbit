@@ -10,7 +10,7 @@ class Mailer < ActionMailer::Base
     @notice   = notice
     @app      = notice.app
 
-    begin
+#    begin
       RestClient.post Errbit::Config.post_to, {
         :app => @app.name,
         :env => @notice.environment_name,
@@ -20,9 +20,9 @@ class Mailer < ActionMailer::Base
         :url => @notice.request['url'],
         :errbit_url => app_err_url(@app, @notice.problem)
       }
-    rescue
+#    rescue
       logger.debug "RestClient Error #{$!}"
-    end
+#    end
 
     mail :to      => @app.notification_recipients,
     :subject => "[#{@app.name}][#{@notice.server_environment['hostname']}] #{@notice.message}"
